@@ -43,23 +43,23 @@ jobs:
           done
         echo "::endgroup::"
         echo "::group::Prerequisites"
-          dos2unix bin/install_prerequisites_ubuntu.sh
+          sudo bin/install_prerequisites_ubuntu.sh
         echo "::endgroup::"
         echo "::group::Install python3 venv"
-          bin/install_python3_venv.sh
+          sudo bin/install_python3_venv.sh
           export PATH=/tmp/hurl-python3-venv/bin:$PATH
           which python3
           python3 --version
           pip --version
         echo "::endgroup::"
         echo "::group::Install Rust"
-          ./bin/install_rust.sh
+          sudo bin/install_rust.sh
         echo "::endgroup::"
         echo "::group::Environment"
-          ./bin/environment.sh
+          sudo bin/environment.sh
         echo "::endgroup::"
         echo "::group::Tests"
-          ./bin/test/test.sh
+          sudo bin/test/test.sh
         echo "::endgroup::"
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4.4.3
