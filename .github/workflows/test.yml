@@ -33,7 +33,7 @@ jobs:
         linux_workspace="/mnt/$(echo "${win_workspace}" | tr -d ':'  | tr '\\' '/' | tr '[:upper:]' '[:lower:]')"
         cd "${linux_workspace}"
     - shell: wsl-bash {0}
-      run: bin/install_prerequisites_ubuntu.sh
+      run: bash bin/install_prerequisites_ubuntu.sh
     - shell: wsl-bash {0}
       run: |
         echo "::group::Install python3 venv"
