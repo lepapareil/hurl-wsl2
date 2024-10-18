@@ -56,21 +56,25 @@ jobs:
         path: |
           ./**/*.log
 
-  test-windows-wsl2-x64:
+  test-windows-wsl-x64:
     runs-on: windows-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.2.1
+      with:
+        ref: ${{ inputs.branch }}
     - name: Setup WSL
       uses: Vampire/setup-wsl@v3.1.3
       with:
         distribution: Ubuntu-22.04
     - shell: wsl-bash {0}
       run: |
-        ls -l /mnt/
+        ls -lR /mnt/d
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4.4.3
       if: ${{ always() }}
       with:
-        name: tests-win64-wsl2-artifacts
+        name: tests-win64-wsl-artifacts
         path: |
           ./**/*.log
 
