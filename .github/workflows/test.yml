@@ -29,13 +29,15 @@ jobs:
     - shell: wsl-bash {0}
       run: |
         # Build, Test units and Integration tests
-        win_workspace="${{ github.workspace }}"
-        linux_workspace="/mnt/$(echo "${win_workspace}" | tr -d ':'  | tr '\\' '/' | tr '[:upper:]' '[:lower:]')"
-        cd "${linux_workspace}"
-    - shell: wsl-bash {0}
-      run: bash bin/install_prerequisites_ubuntu.sh
-    - shell: wsl-bash {0}
-      run: |
+        echo "::group::Move to workspace"
+          win_workspace="${{ github.workspace }}"
+          linux_workspace="/mnt/$(echo "${win_workspace}" | tr -d ':'  | tr '\\' '/' | tr '[:upper:]' '[:lower:]')"
+          cd "${linux_workspace}"
+          ls
+        echo "::endgroup::"
+        echo "::group::Prerequisites"
+          cat bin/install_prerequisites_ubuntu.sh | bash
+        echo "::endgroup::"
         echo "::group::Install python3 venv"
           bin/install_python3_venv.sh
           export PATH=/tmp/hurl-python3-venv/bin:$PATH
@@ -44,13 +46,13 @@ jobs:
           pip --version
         echo "::endgroup::"
         echo "::group::Install Rust"
-          bin/install_rust.sh
+          ./bin/install_rust.sh
         echo "::endgroup::"
         echo "::group::Environment"
-          bin/environment.sh
+          ./bin/environment.sh
         echo "::endgroup::"
         echo "::group::Tests"
-          bin/test/test.sh
+          ./bin/test/test.sh
         echo "::endgroup::"
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4.4.3
