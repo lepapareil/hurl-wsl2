@@ -26,18 +26,16 @@ jobs:
       uses: Vampire/setup-wsl@v3.1.3
       with:
         distribution: Ubuntu-22.04
-        wsl-shell-command: bash -c "bash --noprofile --norc '{0}'"
     - shell: wsl-bash {0}
       run: |
         # Build, Test units and Integration tests
-        echo "::group::Move to workspace"
-          win_workspace="${{ github.workspace }}"
-          linux_workspace="/mnt/$(echo "${win_workspace}" | tr -d ':'  | tr '\\' '/' | tr '[:upper:]' '[:lower:]')"
-          cd "${linux_workspace}"
-        echo "::endgroup::"
-        echo "::group::Install Prerequisites"
-          bin/install_prerequisites_ubuntu.sh
-        echo "::endgroup::"
+        win_workspace="${{ github.workspace }}"
+        linux_workspace="/mnt/$(echo "${win_workspace}" | tr -d ':'  | tr '\\' '/' | tr '[:upper:]' '[:lower:]')"
+        cd "${linux_workspace}"
+    - shell: wsl-bash {0}
+      run: bin/install_prerequisites_ubuntu.sh
+    - shell: wsl-bash {0}
+      run: |
         echo "::group::Install python3 venv"
           bin/install_python3_venv.sh
           export PATH=/tmp/hurl-python3-venv/bin:$PATH
