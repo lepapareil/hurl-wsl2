@@ -26,6 +26,8 @@ jobs:
       uses: Vampire/setup-wsl@v3.1.3
       with:
         distribution: Ubuntu-22.04
+        additional-packages:
+          dos2unix
     - shell: wsl-bash {0}
       run: |
         # Build, Test units and Integration tests
@@ -35,8 +37,13 @@ jobs:
           cd "${linux_workspace}"
           ls
         echo "::endgroup::"
+        echo "::group::Fix sh scripts"
+          for sh in $(find "${linux_workspace}" -name "*sh") ; do
+              dos2unix "${sh}"
+          done
+        echo "::endgroup::"
         echo "::group::Prerequisites"
-          cat bin/install_prerequisites_ubuntu.sh | bash
+          dos2unix bin/install_prerequisites_ubuntu.sh
         echo "::endgroup::"
         echo "::group::Install python3 venv"
           bin/install_python3_venv.sh
