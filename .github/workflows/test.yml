@@ -69,7 +69,10 @@ jobs:
         distribution: Ubuntu-22.04
     - shell: wsl-bash {0}
       run: |
-        ls -lR /mnt/d
+        workspace=$(echo ${{ github.workspace }} | cut --delimiter '\' -f2-)
+        echo "${workspace}"
+        cd "/mnt/d/${workspace}"
+        ls -l
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4.4.3
       if: ${{ always() }}
