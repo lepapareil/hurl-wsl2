@@ -41,6 +41,7 @@ jobs:
         echo "::endgroup::"
         echo "::group::Prerequisites"
           export CARGO_TERM_COLOR=always
+          export RUSTUP_VERBOSE=1
           sudo bin/install_prerequisites_ubuntu.sh
         echo "::endgroup::"
         echo "::group::Install python3 venv"
