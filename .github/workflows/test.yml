@@ -51,6 +51,8 @@ jobs:
           python3 --version
           pip --version
         echo "::endgroup::"
+    - shell: wsl-bash {0}
+      run: |        
         echo "::group::Install Rust"
           sudo bin/install_rust.sh
         echo "::endgroup::"
