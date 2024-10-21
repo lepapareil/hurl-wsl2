@@ -46,7 +46,7 @@ jobs:
           tar -xzf "/tmp/${package_name}.tar.gz" -C /tmp/
           export CARGO_TERM_COLOR=always
           export RUSTUP_VERBOSE=1
-          sudo "/tmp/${package_name}/install.sh
+          sudo "/tmp/${package_name}/install.sh"
         echo "::endgroup::"
         echo "::group::Install python3 venv"
           sudo bin/install_python3_venv.sh
