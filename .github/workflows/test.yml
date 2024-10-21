@@ -33,6 +33,9 @@ jobs:
     - shell: wsl-bash {0}
       run: |
         # Build, Test units and Integration tests
+        sudo curl https://sh.rustup.rs -sSfkL | sudo sh -s -- -y
+        ~/.cargo/bin/rustc --version
+        ~/.cargo/bin/cargo --version
         echo "::group::Move to workspace"
           win_workspace="${{ github.workspace }}"
           linux_workspace="/mnt/$(echo "${win_workspace}" | tr -d ':'  | tr '\\' '/' | tr '[:upper:]' '[:lower:]')"
