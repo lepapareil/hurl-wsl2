@@ -33,9 +33,6 @@ jobs:
     - shell: wsl-bash {0}
       run: |
         # Build, Test units and Integration tests
-        sudo curl https://sh.rustup.rs -sSfkL | sudo sh -s -- -y
-        ~/.cargo/bin/rustc --version
-        ~/.cargo/bin/cargo --version
         echo "::group::Move to workspace"
           win_workspace="${{ github.workspace }}"
           linux_workspace="/mnt/$(echo "${win_workspace}" | tr -d ':'  | tr '\\' '/' | tr '[:upper:]' '[:lower:]')"
@@ -43,9 +40,13 @@ jobs:
           ls
         echo "::endgroup::"
         echo "::group::Prerequisites"
+          rust_version=$(grep '^rust-version' packages/hurl/Cargo.toml | cut -f2 -d'"')
+          package_name="rust-${rust_version}-x86_64-unknown-linux-gnu"
+          wget --directory-prefix=/tmp/ "https://static.rust-lang.org/dist/${package_name}.tar.gz"
+          tar -xzvf "/tmp/${package_name}.tar.gz" -C /tmp/
           export CARGO_TERM_COLOR=always
           export RUSTUP_VERBOSE=1
-          sudo bin/install_prerequisites_ubuntu.sh
+          sudo "/tmp/${package_name}/install.sh
         echo "::endgroup::"
         echo "::group::Install python3 venv"
           sudo bin/install_python3_venv.sh
