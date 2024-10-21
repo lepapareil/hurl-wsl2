@@ -1,3 +1,4 @@
+
 #!/bin/bash
 set -Eeuo pipefail
 
@@ -27,7 +28,6 @@ else
     echo "No curl installed"
 fi
 
-
 echo  "# rust"
 if command -V rustc ; then
     which rustc 
@@ -37,4 +37,3 @@ if command -V rustc ; then
 else
     echo "No rust installed"
 fi
-
